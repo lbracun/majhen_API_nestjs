@@ -1,11 +1,12 @@
 import { Model } from 'mongoose';
-import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
 import { Product } from './interfaces/product.interface';
 import { CreateProductDto } from './dto/create-product.dto';
 
 @Injectable()
 export class ProductsService {
-    constructor(@Inject('ProductModelToken') private readonly productModel: Model<Product>) { }
+    constructor(@InjectModel('Product') private readonly productModel: Model<Product>) { }
 
     async create(createProductDto: CreateProductDto): Promise<Product> {
         createProductDto.dateCreated = new Date().toString();
